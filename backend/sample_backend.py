@@ -1,9 +1,12 @@
 from flask import Flask
 from flask import request
 from flask import jsonify
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+CORS(app)
+
 
 users = { 
     'users_list' :
@@ -67,6 +70,7 @@ def get_users():
                     subdict['users_list'].append(user)
             return subdict
         return users
+
     elif request.method == 'POST':
         userToAdd = request.get_json()
         users['users_list'].append(userToAdd)
@@ -74,6 +78,7 @@ def get_users():
         #resp.status_code = 200 #optionally, you can always set a response code. 
         # 200 is the default code for a normal response
         return resp
+
     elif request.method == 'DELETE':
         userToRem = request.get_json()
         users['users_list'].remove(userToRem)
